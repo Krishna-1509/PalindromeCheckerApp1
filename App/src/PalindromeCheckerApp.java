@@ -1,6 +1,6 @@
 /*
- * UseCase3PalindromeCheckerApp.java
- * UC3: Palindrome Check Using String Reverse
+ * UseCase4PalindromeCheckerApp.java
+ * UC4: Character Array Based Palindrome Check
  */
 
 public class PalindromeCheckerApp {
@@ -8,18 +8,27 @@ public class PalindromeCheckerApp {
     public static void main(String[] args) {
 
         // Hardcoded string to check
-        String word = "racecar";
+        String word = "level";
 
-        // Variable to store reversed string
-        String reversed = "";
+        // Convert string to character array
+        char[] chars = word.toCharArray();
 
-        // Reverse the string using a for loop
-        for (int i = word.length() - 1; i >= 0; i--) {
-            reversed += word.charAt(i);  // Concatenating each character
+        // Two-pointer approach
+        boolean isPalindrome = true;
+        int start = 0;
+        int end = chars.length - 1;
+
+        while (start < end) {
+            if (chars[start] != chars[end]) {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
         }
 
-        // Compare original and reversed strings
-        if (word.equals(reversed)) {
+        // Display result
+        if (isPalindrome) {
             System.out.println("The word \"" + word + "\" is a Palindrome.");
         } else {
             System.out.println("The word \"" + word + "\" is NOT a Palindrome.");
