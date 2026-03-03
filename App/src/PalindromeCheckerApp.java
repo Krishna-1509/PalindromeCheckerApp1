@@ -1,80 +1,27 @@
 /*
- * UseCase8PalindromeCheckerApp.java
- * UC8: Linked List Based Palindrome Checker
+ * UseCase9PalindromeCheckerApp.java
+ * UC9: Recursive Palindrome Checker
  */
 
 public class PalindromeCheckerApp {
 
-    // Node class for singly linked list
-    static class Node {
-        char data;
-        Node next;
+    // Recursive function to check palindrome
+    public static boolean isPalindrome(String word, int start, int end) {
+        // Base condition: crossed indices
+        if (start >= end) return true;
 
-        Node(char data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
+        // If characters at start and end do not match
+        if (word.charAt(start) != word.charAt(end)) return false;
 
-    // Function to check if linked list is palindrome
-    public static boolean isPalindrome(Node head) {
-        if (head == null || head.next == null) return true;
-
-        // Find middle using fast & slow pointers
-        Node slow = head, fast = head;
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        // Reverse second half
-        Node secondHalf = reverse(slow.next);
-
-        // Compare first and second halves
-        Node firstHalf = head;
-        Node secondIter = secondHalf;
-        boolean isPalin = true;
-        while (secondIter != null) {
-            if (firstHalf.data != secondIter.data) {
-                isPalin = false;
-                break;
-            }
-            firstHalf = firstHalf.next;
-            secondIter = secondIter.next;
-        }
-
-        // Optional: restore the list
-        slow.next = reverse(secondHalf);
-
-        return isPalin;
-    }
-
-    // Function to reverse linked list
-    private static Node reverse(Node head) {
-        Node prev = null;
-        Node current = head;
-        while (current != null) {
-            Node nextNode = current.next;
-            current.next = prev;
-            prev = current;
-            current = nextNode;
-        }
-        return prev;
+        // Recursive call moving towards the center
+        return isPalindrome(word, start + 1, end - 1);
     }
 
     public static void main(String[] args) {
-        String word = "madam";
+        String word = "racecar";
 
-        // Convert string to linked list
-        Node head = new Node(word.charAt(0));
-        Node current = head;
-        for (int i = 1; i < word.length(); i++) {
-            current.next = new Node(word.charAt(i));
-            current = current.next;
-        }
-
-        // Check palindrome
-        if (isPalindrome(head)) {
+        // Call recursive palindrome checker
+        if (isPalindrome(word, 0, word.length() - 1)) {
             System.out.println("The word \"" + word + "\" is a Palindrome.");
         } else {
             System.out.println("The word \"" + word + "\" is NOT a Palindrome.");
