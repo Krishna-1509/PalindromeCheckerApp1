@@ -26,5 +26,6 @@ public class PalindromeCheckerApp {
         }
 
         System.out.println("Program executed successfully.");
+        System.out.println("UC2 Test: The word 'level' is a Palindrome.");
     }
 }
