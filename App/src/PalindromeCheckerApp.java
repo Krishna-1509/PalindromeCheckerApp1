@@ -1,36 +1,48 @@
 /*
- * UseCase10PalindromeCheckerApp.java
- * UC10: Case-Insensitive & Space-Ignored Palindrome Checker
+ * UseCase11PalindromeCheckerApp.java
+ * UC11: Object-Oriented Palindrome Service
  */
+
+import java.util.Stack;
+
+class PalindromeChecker {
+    private String word;
+
+    // Constructor
+    public PalindromeChecker(String word) {
+        this.word = word;
+    }
+
+    // Method to check palindrome using stack
+    public boolean checkPalindrome() {
+        Stack<Character> stack = new Stack<>();
+        for (char ch : word.toCharArray()) {
+            stack.push(ch);
+        }
+
+        for (char ch : word.toCharArray()) {
+            if (ch != stack.pop()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
 
 public class PalindromeCheckerApp {
 
-    // Function to check palindrome ignoring case and spaces
-    public static boolean isPalindrome(String word) {
-        // Normalize string: remove spaces and convert to lowercase
-        String normalized = word.replaceAll("\\s+", "").toLowerCase();
-
-        // Check palindrome using two-pointer technique
-        int start = 0;
-        int end = normalized.length() - 1;
-        while (start < end) {
-            if (normalized.charAt(start) != normalized.charAt(end)) {
-                return false;
-            }
-            start++;
-            end--;
-        }
-        return true;
-    }
-
     public static void main(String[] args) {
-        String word = "A man a plan a canal Panama";
+        String word = "level";
 
-        // Call palindrome checker
-        if (isPalindrome(word)) {
-            System.out.println("The phrase \"" + word + "\" is a Palindrome.");
+        // Create an object of PalindromeChecker
+        PalindromeChecker checker = new PalindromeChecker(word);
+
+        // Check palindrome
+        if (checker.checkPalindrome()) {
+            System.out.println("The word \"" + word + "\" is a Palindrome.");
         } else {
-            System.out.println("The phrase \"" + word + "\" is NOT a Palindrome.");
+            System.out.println("The word \"" + word + "\" is NOT a Palindrome.");
         }
 
         System.out.println("Program executed successfully.");
