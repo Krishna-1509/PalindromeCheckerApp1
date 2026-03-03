@@ -1,39 +1,80 @@
 /*
- * UseCase7PalindromeCheckerApp.java
- * UC7: Deque-Based Optimized Palindrome Checker
+ * UseCase8PalindromeCheckerApp.java
+ * UC8: Linked List Based Palindrome Checker
  */
-
-import java.util.Deque;
-import java.util.LinkedList;
 
 public class PalindromeCheckerApp {
 
-    public static void main(String[] args) {
+    // Node class for singly linked list
+    static class Node {
+        char data;
+        Node next;
 
-        // Hardcoded string to check
-        String word = "deified";
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
 
-        // Initialize a deque
-        Deque<Character> deque = new LinkedList<>();
+    // Function to check if linked list is palindrome
+    public static boolean isPalindrome(Node head) {
+        if (head == null || head.next == null) return true;
 
-        // Insert characters into the deque
-        for (int i = 0; i < word.length(); i++) {
-            deque.addLast(word.charAt(i));
+        // Find middle using fast & slow pointers
+        Node slow = head, fast = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
         }
 
-        // Compare front and rear elements
-        boolean isPalindrome = true;
-        while (deque.size() > 1) {
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
-            if (front != rear) {
-                isPalindrome = false;
+        // Reverse second half
+        Node secondHalf = reverse(slow.next);
+
+        // Compare first and second halves
+        Node firstHalf = head;
+        Node secondIter = secondHalf;
+        boolean isPalin = true;
+        while (secondIter != null) {
+            if (firstHalf.data != secondIter.data) {
+                isPalin = false;
                 break;
             }
+            firstHalf = firstHalf.next;
+            secondIter = secondIter.next;
         }
 
-        // Display result
-        if (isPalindrome) {
+        // Optional: restore the list
+        slow.next = reverse(secondHalf);
+
+        return isPalin;
+    }
+
+    // Function to reverse linked list
+    private static Node reverse(Node head) {
+        Node prev = null;
+        Node current = head;
+        while (current != null) {
+            Node nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
+        return prev;
+    }
+
+    public static void main(String[] args) {
+        String word = "madam";
+
+        // Convert string to linked list
+        Node head = new Node(word.charAt(0));
+        Node current = head;
+        for (int i = 1; i < word.length(); i++) {
+            current.next = new Node(word.charAt(i));
+            current = current.next;
+        }
+
+        // Check palindrome
+        if (isPalindrome(head)) {
             System.out.println("The word \"" + word + "\" is a Palindrome.");
         } else {
             System.out.println("The word \"" + word + "\" is NOT a Palindrome.");
