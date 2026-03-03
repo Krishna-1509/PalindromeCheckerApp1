@@ -1,30 +1,36 @@
 /*
- * UseCase9PalindromeCheckerApp.java
- * UC9: Recursive Palindrome Checker
+ * UseCase10PalindromeCheckerApp.java
+ * UC10: Case-Insensitive & Space-Ignored Palindrome Checker
  */
 
 public class PalindromeCheckerApp {
 
-    // Recursive function to check palindrome
-    public static boolean isPalindrome(String word, int start, int end) {
-        // Base condition: crossed indices
-        if (start >= end) return true;
+    // Function to check palindrome ignoring case and spaces
+    public static boolean isPalindrome(String word) {
+        // Normalize string: remove spaces and convert to lowercase
+        String normalized = word.replaceAll("\\s+", "").toLowerCase();
 
-        // If characters at start and end do not match
-        if (word.charAt(start) != word.charAt(end)) return false;
-
-        // Recursive call moving towards the center
-        return isPalindrome(word, start + 1, end - 1);
+        // Check palindrome using two-pointer technique
+        int start = 0;
+        int end = normalized.length() - 1;
+        while (start < end) {
+            if (normalized.charAt(start) != normalized.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
     }
 
     public static void main(String[] args) {
-        String word = "racecar";
+        String word = "A man a plan a canal Panama";
 
-        // Call recursive palindrome checker
-        if (isPalindrome(word, 0, word.length() - 1)) {
-            System.out.println("The word \"" + word + "\" is a Palindrome.");
+        // Call palindrome checker
+        if (isPalindrome(word)) {
+            System.out.println("The phrase \"" + word + "\" is a Palindrome.");
         } else {
-            System.out.println("The word \"" + word + "\" is NOT a Palindrome.");
+            System.out.println("The phrase \"" + word + "\" is NOT a Palindrome.");
         }
 
         System.out.println("Program executed successfully.");
