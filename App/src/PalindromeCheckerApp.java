@@ -1,25 +1,39 @@
 /*
- * UseCase3PalindromeCheckerApp.java
- * UC3: Palindrome Check Using String Reverse
+ * UseCase7PalindromeCheckerApp.java
+ * UC7: Deque-Based Optimized Palindrome Checker
  */
+
+import java.util.Deque;
+import java.util.LinkedList;
 
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         // Hardcoded string to check
-        String word = "racecar";
+        String word = "deified";
 
-        // Variable to store reversed string
-        String reversed = "";
+        // Initialize a deque
+        Deque<Character> deque = new LinkedList<>();
 
-        // Reverse the string using a for loop
-        for (int i = word.length() - 1; i >= 0; i--) {
-            reversed += word.charAt(i);  // Concatenating each character
+        // Insert characters into the deque
+        for (int i = 0; i < word.length(); i++) {
+            deque.addLast(word.charAt(i));
         }
 
-        // Compare original and reversed strings
-        if (word.equals(reversed)) {
+        // Compare front and rear elements
+        boolean isPalindrome = true;
+        while (deque.size() > 1) {
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
+            if (front != rear) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        // Display result
+        if (isPalindrome) {
             System.out.println("The word \"" + word + "\" is a Palindrome.");
         } else {
             System.out.println("The word \"" + word + "\" is NOT a Palindrome.");
