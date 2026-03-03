@@ -1,24 +1,24 @@
 /*
- * UseCase2PalindromeCheckerApp.java
- * UC2: Print a Hardcoded Palindrome Result
+ * UseCase3PalindromeCheckerApp.java
+ * UC3: Palindrome Check Using String Reverse
  */
 
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        // Hardcoded string literal
-        String word = "madam";
+        // Hardcoded string to check
+        String word = "racecar";
 
         // Variable to store reversed string
         String reversed = "";
 
-        // Reverse the string
+        // Reverse the string using a for loop
         for (int i = word.length() - 1; i >= 0; i--) {
-            reversed = reversed + word.charAt(i);
+            reversed += word.charAt(i);  // Concatenating each character
         }
 
-        // Check if original and reversed strings are equal
+        // Compare original and reversed strings
         if (word.equals(reversed)) {
             System.out.println("The word \"" + word + "\" is a Palindrome.");
         } else {
@@ -26,6 +26,5 @@ public class PalindromeCheckerApp {
         }
 
         System.out.println("Program executed successfully.");
-        System.out.println("UC2 Test: The word 'level' is a Palindrome.");
     }
 }
