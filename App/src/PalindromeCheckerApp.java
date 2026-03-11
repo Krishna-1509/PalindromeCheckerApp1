@@ -1,22 +1,17 @@
 /*
- * UseCase11PalindromeCheckerApp.java
- * UC12: Strategy Pattern for Palindrome Algorithms
+ * UC13: Performance Comparison of Palindrome Algorithms
  */
 
 import java.util.Stack;
-import java.util.Scanner;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
-class PalindromeChecker {
-    private String word;
+public class PalindromePerformanceComparison {
 
-    // Constructor
-    public PalindromeChecker(String word) {
-        this.word = word;
-    }
-
-    // Method to check palindrome using stack
-    public boolean checkPalindrome() {
+    // Stack Method
+    public static boolean stackPalindrome(String word) {
         Stack<Character> stack = new Stack<>();
+
         for (char ch : word.toCharArray()) {
             stack.push(ch);
         }
@@ -29,29 +24,68 @@ class PalindromeChecker {
 
         return true;
     }
-}
 
-public class PalindromeCheckerApp {
+    // Deque Method
+    public static boolean dequePalindrome(String word) {
+        Deque<Character> deque = new ArrayDeque<>();
+
+        for (char ch : word.toCharArray()) {
+            deque.addLast(ch);
+        }
+
+        while (deque.size() > 1) {
+            if (!deque.removeFirst().equals(deque.removeLast())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // Two Pointer Method
+    public static boolean twoPointerPalindrome(String word) {
+        int left = 0;
+        int right = word.length() - 1;
+
+        while (left < right) {
+            if (word.charAt(left) != word.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+
+        return true;
+    }
 
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        String word = "racecar";
 
-        System.out.print("Enter a word: ");
-        String word = sc.nextLine();
+        // Stack Performance
+        long start1 = System.nanoTime();
+        boolean stackResult = stackPalindrome(word);
+        long end1 = System.nanoTime();
 
-        // Create an object of PalindromeChecker
-        PalindromeChecker checker = new PalindromeChecker(word);
+        // Deque Performance
+        long start2 = System.nanoTime();
+        boolean dequeResult = dequePalindrome(word);
+        long end2 = System.nanoTime();
 
-        // Check palindrome
-        if (checker.checkPalindrome()) {
-            System.out.println("The word \"" + word + "\" is a Palindrome.");
-        } else {
-            System.out.println("The word \"" + word + "\" is NOT a Palindrome.");
-        }
+        // Two Pointer Performance
+        long start3 = System.nanoTime();
+        boolean pointerResult = twoPointerPalindrome(word);
+        long end3 = System.nanoTime();
 
-        System.out.println("Program executed successfully.");
+        System.out.println("Input Word: " + word);
 
-        sc.close();
+        System.out.println("\nStack Method Result: " + stackResult);
+        System.out.println("Execution Time: " + (end1 - start1) + " ns");
+
+        System.out.println("\nDeque Method Result: " + dequeResult);
+        System.out.println("Execution Time: " + (end2 - start2) + " ns");
+
+        System.out.println("\nTwo Pointer Method Result: " + pointerResult);
+        System.out.println("Execution Time: " + (end3 - start3) + " ns");
     }
 }
