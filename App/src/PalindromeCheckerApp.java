@@ -1,9 +1,10 @@
 /*
  * UseCase11PalindromeCheckerApp.java
- * UC11: Object-Oriented Palindrome Service
+ * UC12: Strategy Pattern for Palindrome Algorithms
  */
 
 import java.util.Stack;
+import java.util.Scanner;
 
 class PalindromeChecker {
     private String word;
@@ -33,7 +34,11 @@ class PalindromeChecker {
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
-        String word = "level";
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a word: ");
+        String word = sc.nextLine();
 
         // Create an object of PalindromeChecker
         PalindromeChecker checker = new PalindromeChecker(word);
@@ -46,5 +51,7 @@ public class PalindromeCheckerApp {
         }
 
         System.out.println("Program executed successfully.");
+
+        sc.close();
     }
 }
